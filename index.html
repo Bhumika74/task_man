@@ -1,0 +1,400 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Management System</title>
+    <style>
+        :root {
+            --primary-color: #18a23a;
+            --secondary-color: #2ecc71;
+            --background-color: #ecf0f1;
+            --text-color: #0e0f0f;
+            --accent-color: #e74c3c;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .login-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--card-shadow);
+            padding: 40px;
+            max-width: 400px;
+            margin: 100px auto;
+            text-align: center;
+        }
+
+        .login-options {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #48df78;
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .dashboard {
+            display: none;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--card-shadow);
+            padding: 20px;
+            margin-bottom: 30px;
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .team-members {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .team-member {
+            background-color: var(--background-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .team-member:hover {
+            background-color: #d5dbdb;
+            transform: scale(1.02);
+        }
+
+        .project-details {
+            display: none;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 4px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .progress-bar {
+            background-color: #e0e0e0;
+            height: 25px;
+            border-radius: 12.5px;
+            margin-top: 15px;
+            overflow: hidden;
+        }
+
+        .progress {
+            background-color: var(--secondary-color);
+            height: 100%;
+            border-radius: 12.5px;
+            transition: width 0.5s ease-in-out;
+        }
+
+        .logout-btn {
+            background-color: var(--accent-color);
+            float: right;
+        }
+
+        .logout-btn:hover {
+            background-color: #c0392b;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .team-leader {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .dashboard-title {
+            margin: 0;
+        }
+
+        .employee-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--card-shadow);
+            padding: 20px;
+            flex: 1;
+            margin: 0 10px;
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        .stat-card p {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="login-container" class="login-container">
+            <h1>Task Management System</h1>
+            <div class="login-options">
+                <button id="admin-login-btn">Admin Login</button>
+                <button id="employee-login-btn">Employee Login</button>
+            </div>
+            <form id="login-form" style="display: none;">
+                <input type="text" id="username" placeholder="Username" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button type="submit" id="login-btn">Login</button>
+            </form>
+        </div>
+
+        <div id="admin-dashboard" class="dashboard">
+            <div class="dashboard-header">
+                <h1 class="dashboard-title">Admin Dashboard</h1>
+                <button class="logout-btn" id="admin-logout-btn">Logout</button>
+            </div>
+            <div class="employee-stats">
+                <div class="stat-card">
+                    <h3>Total Employees</h3>
+                    <p>42</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Departments</h3>
+                    <p>5</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Active Projects</h3>
+                    <p>12</p>
+                </div>
+            </div>
+            <div id="teams"></div>
+        </div>
+
+        <div id="employee-dashboard" class="dashboard">
+            <div class="dashboard-header">
+                <h1 class="dashboard-title">Employee Dashboard</h1>
+                <button class="logout-btn" id="employee-logout-btn">Logout</button>
+            </div>
+            <div id="employee-project" class="card"></div>
+        </div>
+    </div>
+
+    <script>
+        // Simulated databases
+        const adminDatabase = [
+            { username: 'admin1', password: 'pass1' },
+            { username: 'admin2', password: 'pass2' }
+        ];
+
+        const employeeDatabase = [
+            { username: 'john', password: 'john123', name: 'John Doe', project: 'Frontend Development', progress: 75, details: 'Leading the development of our new customer-facing web application using React and Redux.' },
+            { username: 'jane', password: 'jane123', name: 'Jane Smith', project: 'Backend Development', progress: 60, details: 'Developing RESTful APIs and implementing database optimizations for improved performance.' },
+            { username: 'mike', password: 'mike123', name: 'Mike Johnson', project: 'Database Design', progress: 80, details: 'Designing and implementing a new NoSQL database structure to handle large-scale data processing.' },
+            { username: 'emily', password: 'emily123', name: 'Emily Brown', project: 'UI/UX Design', progress: 90, details: 'Creating intuitive user interfaces and conducting user research to improve overall user experience.' }
+        ];
+
+        const teamsData = [
+            {
+                name: 'Development Team',
+                members: [
+                    { name: 'John Doe', project: 'Frontend Development', details: 'Leading the development of our new customer-facing web application using React and Redux.', isLeader: true },
+                    { name: 'Jane Smith', project: 'Backend Development', details: 'Developing RESTful APIs and implementing database optimizations for improved performance.' },
+                    { name: 'Mike Johnson', project: 'Database Design', details: 'Designing and implementing a new NoSQL database structure to handle large-scale data processing.' },
+                    { name: 'Emily Brown', project: 'UI/UX Design', details: 'Creating intuitive user interfaces and conducting user research to improve overall user experience.' }
+                ]
+            },
+            {
+                name: 'Marketing Team',
+                members: [
+                    { name: 'Sarah Lee', project: 'Social Media Campaign', details: 'Developing and executing a multi-platform social media strategy to increase brand awareness.', isLeader: true },
+                    { name: 'Tom Wilson', project: 'Content Creation', details: 'Producing engaging blog posts, videos, and infographics to support our marketing initiatives.' },
+                    { name: 'Emma Davis', project: 'SEO Optimization', details: 'Implementing SEO best practices to improve our websites search engine rankings.' },
+                    { name: 'Chris Taylor', project: 'Email Marketing', details: 'Designing and managing email campaigns to nurture leads and increase customer engagement.' }
+                ]
+            },
+            {
+                name: 'Designing Team',
+                members: [
+                    { name: 'Smith Don', project: 'Social Media ', details: 'Developing and executing a multi-platform social media strategy to increase brand awareness.', isLeader: true },
+                    { name: 'Tom Wilson', project: 'Design Creation', details: 'Producing engaging blog posts, videos, and infographics to support our marketing initiatives.' },
+                    { name: 'Davis ', project: 'Optimization', details: 'Implementing SEO best practices to improve our websites search engine rankings.' },
+                    { name: 'Taylor', project: 'Designing website', details: 'Designing and managing campaigns to nurture leads and increase customer engagement.' }
+                ]
+            },
+            {
+                name: 'Sales Team',
+                members: [
+                    { name: 'Sarah Lee', project: 'Sale Campaign', details: 'Developing and executing a multi-platform social media strategy to increase brand awareness.', isLeader: true },
+                    { name: 'Tom Wilson', project: 'Content Promotion', details: 'Producing engaging blog posts, videos, and infographics to support our marketing initiatives.' },
+                    { name: 'Emma Davis', project: 'SEO ', details: 'Implementing SEO best practices to improve our websites search engine rankings.' },
+                    { name: 'Chris Taylor', project: 'Email Checking', details: 'Designing and managing email campaigns to nurture leads and increase customer engagement.' }
+                ]
+            }
+        ];
+
+        let currentRole = '';
+
+        function showLoginForm(role) {
+            currentRole = role;
+            document.getElementById('login-form').style.display = 'block';
+        }
+
+        function login(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            let authenticated = false;
+            let user = null;
+
+            if (currentRole === 'admin') {
+                user = adminDatabase.find(admin => admin.username === username && admin.password === password);
+            } else if (currentRole === 'employee') {
+                user = employeeDatabase.find(emp => emp.username === username && emp.password === password);
+            }
+
+            if (user) {
+                authenticated = true;
+            }
+
+            if (authenticated) {
+                document.getElementById('login-container').style.display = 'none';
+                if (currentRole === 'admin') {
+                    document.getElementById('admin-dashboard').style.display = 'block';
+                    displayTeams();
+                } else if (currentRole === 'employee') {
+                    document.getElementById('employee-dashboard').style.display = 'block';
+                    displayEmployeeProject(username);
+                }
+            } else {
+                alert('Invalid username or password');
+            }
+        }
+
+        function displayTeams() {
+            const teamsContainer = document.getElementById('teams');
+            teamsContainer.innerHTML = '';
+            teamsData.forEach(team => {
+                const teamDiv = document.createElement('div');
+                teamDiv.className = 'card';
+                teamDiv.innerHTML = `
+                    <h3>${team.name}</h3>
+                    <ul class="team-members">
+                        ${team.members.map(member => `
+                            <li class="team-member ${member.isLeader ? 'team-leader' : ''}" onclick="toggleProjectDetails('${member.name.replace("'", "\\'")}')">
+                                ${member.isLeader ? '👑 ' : ''}${member.name}
+                                <div class="project-details" id="${member.name.replace(/\s+/g, '-')}">
+                                    <strong>Project:</strong> ${member.project}<br>
+                                    <strong>Details:</strong> ${member.details}
+                                </div>
+                            </li>
+                        `).join('')}
+                    </ul>
+                `;
+                teamsContainer.appendChild(teamDiv);
+            });
+        }
+
+        function toggleProjectDetails(memberName) {
+            const detailsElement = document.getElementById(memberName.replace(/\s+/g, '-'));
+            detailsElement.style.display = detailsElement.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function displayEmployeeProject(username) {
+            const employee = employeeDatabase.find(emp => emp.username === username);
+            if (employee) {
+                const projectDiv = document.getElementById('employee-project');
+                projectDiv.innerHTML = `
+                    <h3>Welcome, ${employee.name}</h3>
+                    <p><strong>Project:</strong> ${employee.project}</p>
+                    <p><strong>Details:</strong> ${employee.details}</p>
+                    <p><strong>Progress:</strong> ${employee.progress}%</p>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: ${employee.progress}%;"></div>
+                    </div>
+                `;
+            }
+        }
+
+        function logout() {
+            document.getElementById('login-container').style.display = 'block';
+            document.getElementById('admin-dashboard').style.display = 'none';
+            document.getElementById('employee-dashboard').style.display = 'none';
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            currentRole = '';
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('admin-login-btn').addEventListener('click', () => showLoginForm('admin'));
+            document.getElementById('employee-login-btn').addEventListener('click', () => showLoginForm('employee'));
+            document.getElementById('login-form').addEventListener('submit', login);
+            document.getElementById('admin-logout-btn').addEventListener('click', logout);
+            document.getElementById('employee-logout-btn').addEventListener('click', logout);
+        });
+    </script>
+</body>
+</html>
